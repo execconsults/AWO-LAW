@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 
 
 
+
+app.get('/',(req,res) =>{
+   res.send('hi')
+ })
+
+
 app.all('*', (req,res,next)=>{
     next(new ExpressError('Page Not Found', 404))
  })
@@ -15,11 +21,9 @@ app.all('*', (req,res,next)=>{
     res.status(statusCode).render('error.ejs', { err })
  })
  
- app.get('/',(req,res) =>{
-    res.send('hi')
- })
+
  // 
  //server
- app.listen(3000, () => {
-    console.log('Serving on port 3001')
+ app.listen(3002, () => {
+    console.log('Serving on port 3000')
  })
