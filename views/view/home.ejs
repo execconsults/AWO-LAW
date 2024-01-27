@@ -54,18 +54,19 @@
           <div>
 
           <div class=" h-auto w-auto top-0 right-0  bg-gradient-to-l from-transparent to-white flex flex-col">
-         <div class="flex p-4 mb-7 h-10/11 flex-col">
-          <b>280+ </b> <span class="text-gray-500 text-xs">CASE STUDY</span>
-         </div> 
-         <div class="flex p-4 mb-9 flex-col">
-          <b>180+ </b> <span class="text-gray-500 text-xs">HAPPY CLITENTS</span>
-         </div> 
-         <div class="flex p-4 mb-9 flex-col">
-          <b>97% </b> <span class="text-gray-500 text-xs">RATE OF WIN CASE</span>
-         </div> 
-         <div class="flex p-4 mb-9 flex-col">
-          <b>10+ </b> <span class="text-gray-500 text-xs">EXPERT LAWYERS</span>
-         </div> 
+            <div class="flex p-4 mb-7 h-10/11 flex-col" id="caseStudy">
+              <b>0</b> <span class="text-gray-500 text-xs">CASE STUDY</span>
+            </div> 
+            <div class="flex p-4 mb-9 flex-col" id="happyClients">
+              <b>0</b> <span class="text-gray-500 text-xs">HAPPY CLITENTS</span>
+            </div> 
+            <div class="flex p-4 mb-9 flex-col" id="winRate">
+              <b>0%</b> <span class="text-gray-500 text-xs">RATE OF WIN CASE</span>
+            </div> 
+            <div class="flex p-4 mb-9 flex-col" id="expertLawyers">
+              <b>0</b> <span class="text-gray-500 text-xs">EXPERT LAWYERS</span>
+            </div>
+            
         </div>
 
           </div>
@@ -207,6 +208,51 @@ Ditch the estate planning confusion! We craft personalized plans with expert gui
     showmore.classList.toggle('hidden')
     // showbtn.innerHTML = 'Show Less'
   })
-  
+  document.addEventListener('DOMContentLoaded', () => {
+  // Function to animate numbers
+  function animateValue(obj, start, end, duration, isPercentage = false) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      obj.textContent = Math.floor(progress * (end - start) + start) + (isPercentage ? '%' : '');
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        switch (id) {
+          case 'caseStudy':
+            animateValue(entry.target.querySelector('b'), 0, 280, 2000);
+            break;
+          case 'happyClients':
+            animateValue(entry.target.querySelector('b'), 0, 180, 2000);
+            break;
+          case 'winRate':
+            animateValue(entry.target.querySelector('b'), 0, 97, 2000, true);
+            break;
+          case 'expertLawyers':
+            animateValue(entry.target.querySelector('b'), 0, 10, 2000);
+            break;
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.5 // Trigger when 50% of the element is in the viewport
+  });
+
+  // Observe the elements
+  document.querySelectorAll('.flex').forEach(el => {
+    observer.observe(el);
+  });
+});
+
   
 </script>
