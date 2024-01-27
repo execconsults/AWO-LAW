@@ -75,7 +75,7 @@ app.use(flash())
  
 app.get('/atom.xml', async (req, res) => {
    try {
-     const baseUrl = 'https://uniquweb.com'; // Update with your website's base URL
+     const baseUrl = 'https://awolae.com'; // Update with your website's base URL
      const currentDate = new Date().toISOString();
  
      // Generate the sitemap XML dynamically
@@ -138,7 +138,7 @@ app.post('/submit-form', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'uniquwebteam@gmail.com',
+        user: 'awolaw@gmail.com',
         pass: 'ogrf qiks kcoi hjtx',
       },
     });
@@ -146,14 +146,12 @@ app.post('/submit-form', async (req, res) => {
     // Check if the email is in a valid format
     if (validateEmailFormat(userEmail)) {
       const mailOptions = {
-        from: 'uniquwebteam@gmail.com',
+        from: 'awolaw@gmail.com',
         to: userEmail,
-        subject: 'Thanks for getting started with uniquweb!',
+        subject: 'Thanks for your appoiments ',
         html: `
           <p>Hello ${req.body.name},</p>
-          <p>This is the uniquweb team thanks for getting started with us and we will contact you shortly </p>
-          <p>Longer than 24 hours? you can give us a call providing us your name we will find your quote and proceed to the next step.</p>
-          <p>The Uniquweb Team</p>
+        
         `,
       };
 
