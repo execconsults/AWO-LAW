@@ -1,5 +1,5 @@
 {
-  "name": "uniquweb",
+  "name": "AwoLaw",
   "version": "1.0.0",
   "description": "make uniqweb",
   "main": "index.js",
@@ -8,8 +8,8 @@
   },
   "keywords": [
     "web",
-    "unique",
-    "websitebuilder"
+    "law",
+    "awolaw"
   ],
   "author": "zlivehe",
   "license": "ISC",
