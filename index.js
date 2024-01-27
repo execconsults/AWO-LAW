@@ -180,10 +180,22 @@ app.post('/submit-form', async (req, res) => {
 
 
 
-app.get('/render/getstarted',(req,res)=>{
-   res.render('view/getstarted.ejs')
+app.get('/real-estate-law',(req,res)=>{
+   res.render('view/realestate.ejs')
 })
 
+app.get('/buisness-law',(req,res)=>{
+    res.render('view/buisnesslaw.ejs')
+ })
+ app.get('/estate-planing',(req,res)=>{
+    res.render('view/estateplaning.ejs')
+ })
+ app.get('/about-us',(req,res)=>{
+    res.render('view/aboutus.ejs')
+ })
+ app.get('/contact-us',(req,res)=>{
+    res.render('view/contactus.ejs')
+ })
 app.get('/policy',(req,res)=>{
    res.render('view/privacy.ejs')
 })
@@ -199,6 +211,7 @@ app.get('/terms',(req,res)=>{
 app.get('/help',(req,res)=>{
    res.render('view/help.ejs')
 })
+
 // 404 page not found route
 app.all('*', (req,res,next)=>{
    next(new ExpressError('Page Not Found', 404))
@@ -213,3 +226,4 @@ app.all('*', (req,res,next)=>{
 app.listen(5000, () => {
     console.log('Serving on port 5000')
 })
+
