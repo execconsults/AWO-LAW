@@ -199,6 +199,14 @@ app.get('/buisness-law',(req,res)=>{
 app.get('/policy',(req,res)=>{
    res.render('view/privacy.ejs')
 })
+
+
+app.get('/quotes',(req,res) =>{
+  
+
+   res.render('view/quotes.ejs')
+})
+
 app.get('/privacy',(req,res)=>{
    res.render('view/privacy.ejs')
 })
@@ -206,6 +214,7 @@ app.get('/cookies',(req,res)=>{
    res.render('view/cookies.ejs')
 })
 app.get('/terms',(req,res)=>{
+
    res.render('view/terms.ejs')
 })
 app.get('/help',(req,res)=>{
