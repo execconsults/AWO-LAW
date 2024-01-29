@@ -1,61 +1,59 @@
-const express = require('express')
-const app = express()
-const methodOveride = require('method-override')
-const path = require('path')
-const ejsMate = require('ejs-mate')
-const flash = require('connect-flash')
-const session = require('express-session')
-const mongoose = require('mongoose')
-const ExpressError = require('./views/utilities/ExpressError')
-const tailwind = require('tailwindcss')
-const axios = require('axios')
+const express = require("express");
+const app = express();
+const methodOveride = require("method-override");
+const path = require("path");
+const ejsMate = require("ejs-mate");
+const flash = require("connect-flash");
+const session = require("express-session");
+const mongoose = require("mongoose");
+const ExpressError = require("./views/utilities/ExpressError");
+const tailwind = require("tailwindcss");
+const axios = require("axios");
 const fs = require("fs");
-const Contacts = require('./model/appoiment')
+const Contacts = require("./model/appoiment");
 // Replace with your Namecheap API credentials
-const apiKey = 'cb839aa178c341898fd81c36924005a9';
-const userName = 'zlivehe55';
-const apiEndpoint = 'https://api.namecheap.com/xml.response';
-const nodemailer = require('nodemailer');
+const apiKey = "cb839aa178c341898fd81c36924005a9";
+const userName = "zlivehe55";
+const apiEndpoint = "https://api.namecheap.com/xml.response";
+const nodemailer = require("nodemailer");
 
 // const homeRoute = require('./routes/homeRoutes')
 
 const sessionConfig = {
-    secret :'thisshouldbebetter',
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-    httpOnly:true,
+  secret: "thisshouldbebetter",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
     expires: Date.now() + 100 * 60 * 60 * 24 * 7,
-    maxAge: 200 * 60 * 60 * 24 * 7
-    }
- }
+    maxAge: 200 * 60 * 60 * 24 * 7,
+  },
+};
 
+dbUrl = "mongodb+srv://zlivhe:pVGMDmaGmxRCenYU@gukari.w3j3o1v.mongodb.net/";
+mongoose
+  .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
- dbUrl = 'mongodb+srv://zlivhe:pVGMDmaGmxRCenYU@gukari.w3j3o1v.mongodb.net/'
- mongoose.connect(dbUrl, 
- {useNewUrlParser: true,
- useUnifiedTopology: true})
- 
- .then(()=>{
-    console.log('open')
- })
- .catch(err =>{
-    console.log("Oh no")
-    console.log(err)
- });
- 
-app.set('views engine','ejs')
-app.set('views', path.join(__dirname, 'views')); 
-app.engine('ejs',ejsMate)
+  .then(() => {
+    console.log("open");
+  })
+  .catch((err) => {
+    console.log("Oh no");
+    console.log(err);
+  });
+
+app.set("views engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
 app.use(express.json());
 
-app.use(methodOveride('_method'))
-app.use(express.static('layouts'))
-app.use(express.static('js'))
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({extended: true}))
-app.use(session(sessionConfig))
-app.use(flash())
+app.use(methodOveride("_method"));
+app.use(express.static("layouts"));
+app.use(express.static("js"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(session(sessionConfig));
+app.use(flash());
 
 // app.use('/',homeRoute)
 
@@ -88,34 +86,33 @@ app.get('/atom.xml', async (req, res) => {
        <lastmod>${currentDate}</lastmod>
        <priority>1.0</priority>
      </url>\n`;
-     
-     sitemap += '</urlset>';
- 
-     // Save the generated sitemap XML to a file
-     const filePath = path.join(__dirname, 'public', 'sitemap.xml');
-     fs.writeFileSync(filePath, sitemap, 'utf8');
-      console.log(filePath)
-     // Set the content type header and send the file as the response
-     res.header('Content-Type', 'application/xml');
-     res.sendFile(filePath);
-   } catch (error) {
-     console.error('Error generating sitemap:', error);
-     res.status(500).send('Internal Server Error');
-   }
- });
 
-app.get('/files',(req,res)=>{
-   res.send('sitemap.ejs')
-})
+    sitemap += "</urlset>";
 
-app.get('/getstarted',(req,res)=>{
-   res.render('view/home.ejs')
-})
-app.get('/appointments',async(req,res) =>{
-   const appoiments  = await Contacts.find({});
-   res.render('view/appoiments.ejs',{appoiments})
+    // Save the generated sitemap XML to a file
+    const filePath = path.join(__dirname, "public", "sitemap.xml");
+    fs.writeFileSync(filePath, sitemap, "utf8");
+    console.log(filePath);
+    // Set the content type header and send the file as the response
+    res.header("Content-Type", "application/xml");
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error("Error generating sitemap:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
-})
+app.get("/files", (req, res) => {
+  res.send("sitemap.ejs");
+});
+
+app.get("/getstarted", (req, res) => {
+  res.render("view/home.ejs");
+});
+app.get("/appointments", async (req, res) => {
+  const appoiments = await Contacts.find({});
+  res.render("view/appoiments.ejs", { appoiments });
+});
 function validateEmailFormat(email) {
    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    return regex.test(email);
@@ -153,15 +150,27 @@ app.post('/submit-form', async (req, res) => {
           <p>Hello ${req.body.name},</p>
         
         `,
-      };
+        };
 
-      // Send the email
-      await transporter.sendMail(mailOptions);
+        // Send the email
+        await transporter.sendMail(mailOptions);
 
-      console.log('Welcome email sent successfully');
-    } else {
-      console.error(`Invalid email format for user: ${user._id}`);
+        console.log("Welcome email sent successfully");
+      } else {
+        console.error(`Invalid email format for user: ${user._id}`);
+      }
+
+      // Save the contact document to the database
+      const savedContact = await newContact.save();
+      console.log(savedContact);
+      // Respond with the saved contact document
+      res.status(202).json(savedContact);
     }
+  } catch (error) {
+    console.error("Error saving contact:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
            // Save the contact document to the database
            const savedContact = await newContact.save();
@@ -178,9 +187,25 @@ app.post('/submit-form', async (req, res) => {
 
 
 
-app.get('/real-estate-law',(req,res)=>{
-   res.render('view/realestate.ejs')
-})
+app.get("/real-estate-law", (req, res) => {
+  res.render("view/realestate.ejs", {
+    informationSheets: [
+      {
+        title: "Buyers Information sheet",
+        link: "./public/infosheets/Buyer information Sheet (21).pdf",
+      },
+      {
+        title: "Seller(s) Information sheet",
+        link: "./public/infosheets/Sellers Information sheet.pdf",
+      },
+      {
+        title: "Payoff Authorization",
+        link: "./public/infosheets/Auth Payoff.pdf",
+      },
+      // ... other sheets
+    ],
+  });
+});
 
 app.get('/buisness-law',(req,res)=>{
     res.render('view/buisnesslaw.ejs')
@@ -220,17 +245,16 @@ app.get('/help',(req,res)=>{
 })
 
 // 404 page not found route
-app.all('*', (req,res,next)=>{
-   next(new ExpressError('Page Not Found', 404))
-})
-// error hadling 
- app.use((err, req, res, next) =>{
-   const { statusCode = 500 } = err;
-   if (!err.message) err.message = 'Oh No, Something Went Wrong!'
-   res.status(statusCode).render('error.ejs', { err })
-})
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
+});
+// error hadling
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error.ejs", { err });
+});
 //server
-app.listen(5000, () => {
-    console.log('Serving on port 5000')
-})
-
+app.listen(5001, () => {
+  console.log("Serving on port 5000");
+});

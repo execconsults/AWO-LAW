@@ -1,1 +1,110 @@
 <% layout('./layouts/boilerplate.ejs')%> 
+
+<style>
+    .position-container {
+        position: relative;
+        height: 25em;
+        /* Or any desired height */
+    }
+
+    .position-container img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .image-container {
+        position: relative;
+        text-align: center;
+    }
+
+    .image-container img {
+        width: 100%;
+        /* Adjust as needed */
+        height: auto;
+        /* Adjust as needed */
+    }
+
+    .centered-heading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3em;
+        /* Adjust the size as needed */
+    }
+</style>
+
+<div class="h-96 position-container image-container" style="overflow: hidden;">
+    <img class="h-50 w-full" src="imgs/awotitle-inner-harbor-of-baltimore-maryland-xl.jpg" alt="" srcset="">
+    <div class=" h-96 elementor-background-overlay"></div>
+    <h1 class="text-black centered-heading font-bold text-white ">Business Law</h1>
+
+
+</div>
+
+
+
+<br />
+<div class="container mx-auto flex flex-wrap pt-4 pb-12">
+    <!-- ASIDE: Sidebar for Information Sheets -->
+    <aside class="w-full lg:w-1/4 px-6">
+
+        <!-- Call to Action Section -->
+
+        <div class="bg-[#003553] text-white p-6 mb-6 ">
+            <h2 class="text-2xl mb-4 text-white">Need an Advice from Expert Lawyers?</h2>
+            <p class="mb-4 text-white">Get an Appointment Today!</p>
+            <a href="/contact-us" class="inline-block bg-cyan-500 hover:bg-blue-950 text-white py-2 px-4 rounded">
+                Get In Touch
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="w-full lg:w-3/6 px-6 text-base mx-10">
+
+
+        <!-- Business Law Content -->
+        <article>
+            <h1 class="mb-4 font-bold text-3xl text-cyan-500 capitalize ">Business law is not just about compliance, it’s about creating a solid foundation for growth and success.
+            </h1>
+            <p class="mb-4">Awo Law provide expertise to our business clients for business planning and compliance. We are focused
+                on strategies for
+                small businesses to ensure profitability and achieving long term goals. Our services includes business formation,
+                contracts, compliance review and training, and employment law.</p>
+            <!-- Real Estate Developers Section -->
+            <section>
+                <h2 class="text-xl font-semibold  mb-2">Compliance</h2>
+                <p class="mb-4">Today’s regulatory environment can be cumbersome for small business owners. Let us help to ensure your business complies
+                with regulatory requirements. With up to date reporting, effective filing, and diligent review, we can provide an easy
+                roadmap on how to ensure your business meets and exceed industry standards.</p>
+                <!-- Additional content... -->
+            </section>
+
+            <!-- Additional Sections -->
+            <section>
+                <h2 class="text-xl font-semibold  mb-2">Contracts</h2>
+                <p class="mb-4">Execute contracts and agreements with ease. As your business grows, contractual obligations with third parties will
+                become an integral part of your organization. From employee contracts, express contracts, executory contracts, bilateral
+                and unilateral contracts, adhesion contracts, aleatory contracts, void and voidable contracts, we can ensure your
+                business is adequately protected and ready for unforeseen circumstances. We represent our clients in Arbitration
+                proceedings to provide a quicker and less expensive method to resolving contract disputes.
+</p>
+                <!-- Additional content... -->
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold  mb-2">Small Business Support</h2>
+                <p class="mb-4">We pride ourselves in providing the upmost support for small businesses. We can help develop your business plan, best
+                practices, required employee pamphlets kits, and provide tips and advise on how your small business can succeed.
+                
+                At Awo Law, we are heavily invested in our clients’ success. Call us today with any questions, and we will be glad to
+                provide our legal expertise.</p>
+                <!-- Additional content... -->
+            </section>
+        </article>
+    </main>
+</div>
+<hr style="height:2px;border-width:0;color:gray;background-color:gray">
