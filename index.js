@@ -57,28 +57,31 @@ app.use(flash());
 
 // app.use('/',homeRoute)
 
-app.use((req, res, next) => {
-  const routes = req.route;
-  res.locals.currentUser = req.session.user;
-  //  console.log(req.session)
-  next();
-});
+ app.use((req, res, next) => {   
+    const routes =  req.route
+    res.locals.currentUser = req.session.user
+   //  console.log(req.session)
+    next();
+ })
+ 
 
-app.get("/", (req, res) => {
-  res.render("view/home.ejs");
-});
 
-app.get("/atom.xml", async (req, res) => {
-  try {
-    const baseUrl = "https://uniquweb.com"; // Update with your website's base URL
-    const currentDate = new Date().toISOString();
+ app.get('/',(req,res)=>{
+    res.render('view/home.ejs')
+ })
 
-    // Generate the sitemap XML dynamically
-    let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-
-    // Add URLs dynamically from your website
-    sitemap += `<url>
+ 
+app.get('/atom.xml', async (req, res) => {
+   try {
+     const baseUrl = 'https://awolae.com'; // Update with your website's base URL
+     const currentDate = new Date().toISOString();
+ 
+     // Generate the sitemap XML dynamically
+     let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+     sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+ 
+     // Add URLs dynamically from your website
+     sitemap += `<url>
        <loc>${baseUrl}/</loc>
        <lastmod>${currentDate}</lastmod>
        <priority>1.0</priority>
@@ -111,45 +114,41 @@ app.get("/appointments", async (req, res) => {
   res.render("view/appoiments.ejs", { appoiments });
 });
 function validateEmailFormat(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-}
+   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   return regex.test(email);
+ }
 
-app.post("/submit-form", async (req, res) => {
-  try {
-    // Check if a document with the same data already exists
-    const existingContact = await Contacts.findOne(req.body);
+app.post('/submit-form', async (req, res) => {
+   try {
+       // Check if a document with the same data already exists
+       const existingContact = await Contacts.findOne(req.body);
 
-    const userEmail = req.body.email;
-    if (existingContact) {
-      // If a duplicate is found, do not save and respond accordingly
-      res
-        .status(400)
-        .json({ error: "Duplicate entry. Contact already exists." });
-    } else {
-      // Create a new contact document using the Contact model
-      const newContact = new Contacts(req.body);
+       const userEmail = req.body.email
+       if (existingContact) {
+           // If a duplicate is found, do not save and respond accordingly
+           res.status(400).json({ error: 'Duplicate entry. Contact already exists.' });
+       } else {
+           // Create a new contact document using the Contact model
+           const newContact = new Contacts(req.body);
 
-      // Create a reusable transporter object using the default SMTP transport
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "uniquwebteam@gmail.com",
-          pass: "ogrf qiks kcoi hjtx",
-        },
-      });
+               // Create a reusable transporter object using the default SMTP transport
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'awolaw@gmail.com',
+        pass: 'ogrf qiks kcoi hjtx',
+      },
+    });
 
-      // Check if the email is in a valid format
-      if (validateEmailFormat(userEmail)) {
-        const mailOptions = {
-          from: "uniquwebteam@gmail.com",
-          to: userEmail,
-          subject: "Thanks for getting started with uniquweb!",
-          html: `
+    // Check if the email is in a valid format
+    if (validateEmailFormat(userEmail)) {
+      const mailOptions = {
+        from: 'awolaw@gmail.com',
+        to: userEmail,
+        subject: 'Thanks for your appoiments ',
+        html: `
           <p>Hello ${req.body.name},</p>
-          <p>This is the uniquweb team thanks for getting started with us and we will contact you shortly </p>
-          <p>Longer than 24 hours? you can give us a call providing us your name we will find your quote and proceed to the next step.</p>
-          <p>The Uniquweb Team</p>
+        
         `,
         };
 
@@ -173,6 +172,21 @@ app.post("/submit-form", async (req, res) => {
   }
 });
 
+           // Save the contact document to the database
+           const savedContact = await newContact.save();
+    console.log(savedContact)
+           // Respond with the saved contact document
+           res.status(202).json(savedContact);
+       }
+   } catch (error) {
+       console.error('Error saving contact:', error);
+       res.status(500).json({ error: 'Internal Server Error' });
+   }
+});
+
+
+
+
 app.get("/real-estate-law", (req, res) => {
   res.render("view/realestate.ejs", {
     informationSheets: [
@@ -193,33 +207,42 @@ app.get("/real-estate-law", (req, res) => {
   });
 });
 
-app.get("/buisness-law", (req, res) => {
-  res.render("view/buisnesslaw.ejs");
-});
-app.get("/estate-planing", (req, res) => {
-  res.render("view/estateplaning.ejs");
-});
-app.get("/about-us", (req, res) => {
-  res.render("view/aboutus.ejs");
-});
-app.get("/contact-us", (req, res) => {
-  res.render("view/contactus.ejs");
-});
-app.get("/policy", (req, res) => {
-  res.render("view/privacy.ejs");
-});
-app.get("/privacy", (req, res) => {
-  res.render("view/privacy.ejs");
-});
-app.get("/cookies", (req, res) => {
-  res.render("view/cookies.ejs");
-});
-app.get("/terms", (req, res) => {
-  res.render("view/terms.ejs");
-});
-app.get("/help", (req, res) => {
-  res.render("view/help.ejs");
-});
+app.get('/buisness-law',(req,res)=>{
+    res.render('view/buisnesslaw.ejs')
+ })
+ app.get('/estate-planing',(req,res)=>{
+    res.render('view/estateplaning.ejs')
+ })
+ app.get('/about-us',(req,res)=>{
+    res.render('view/aboutus.ejs')
+ })
+ app.get('/contact-us',(req,res)=>{
+    res.render('view/contactus.ejs')
+ })
+app.get('/policy',(req,res)=>{
+   res.render('view/privacy.ejs')
+})
+
+
+app.get('/quotes',(req,res) =>{
+  
+
+   res.render('view/quotes.ejs')
+})
+
+app.get('/privacy',(req,res)=>{
+   res.render('view/privacy.ejs')
+})
+app.get('/cookies',(req,res)=>{
+   res.render('view/cookies.ejs')
+})
+app.get('/terms',(req,res)=>{
+
+   res.render('view/terms.ejs')
+})
+app.get('/help',(req,res)=>{
+   res.render('view/help.ejs')
+})
 
 // 404 page not found route
 app.all("*", (req, res, next) => {
