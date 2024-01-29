@@ -172,17 +172,17 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
-           // Save the contact document to the database
-           const savedContact = await newContact.save();
-    console.log(savedContact)
-           // Respond with the saved contact document
-           res.status(202).json(savedContact);
-       }
-   } catch (error) {
-       console.error('Error saving contact:', error);
-       res.status(500).json({ error: 'Internal Server Error' });
-   }
-});
+//            // Save the contact document to the database
+//            const savedContact = await newContact.save();
+//     console.log(savedContact)
+//            // Respond with the saved contact document
+//            res.status(202).json(savedContact);
+//        }
+//    } catch (error) {
+//        console.error('Error saving contact:', error);
+//        res.status(500).json({ error: 'Internal Server Error' });
+//    }
+// });
 
 
 
