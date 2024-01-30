@@ -192,15 +192,19 @@ app.get("/real-estate-law", (req, res) => {
     informationSheets: [
       {
         title: "Buyers Information sheet",
-        link: "./public/infosheets/Buyer information Sheet (21).pdf",
+        link: "/infosheets/Buyer information Sheet (21).pdf",
       },
       {
         title: "Seller(s) Information sheet",
-        link: "./public/infosheets/Sellers Information sheet.pdf",
+        link: "/infosheets/Sellers Information sheet.pdf",
+      },
+      {
+        title: "Refinance (information sheet)",
+        link: "/infosheets/Refinance info sheet translation.pdf",
       },
       {
         title: "Payoff Authorization",
-        link: "./public/infosheets/Auth Payoff.pdf",
+        link: "/infosheets/Auth Payoff.pdf",
       },
       // ... other sheets
     ],
