@@ -255,6 +255,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { err });
 });
 //server
-app.listen(5001, () => {
+app.listen(5000, () => {
   console.log("Serving on port 5000");
 });
