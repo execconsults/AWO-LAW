@@ -234,8 +234,9 @@ app.get('/quotes',(req,res) =>{
    res.render('view/quotes.ejs')
 })
 
-app.post('/contact',async(req,res) =>{
-  console.log(req.body)
+app.post('/contact', async (req, res) => {
+  console.log(req.body);
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -249,24 +250,56 @@ app.post('/contact',async(req,res) =>{
     const mailOptions = {
       from: 'awolaw@gmail.com',
       to: userEmail,
-      subject: 'Thanks for your appoiments ',
+      subject: 'Thanks for your appointment!',
       html: `
-        <p>Hello ${req.body.name},</p>
-      
+        <div style="font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; border-radius: 10px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
+          <h1 style="font-size: 24px; color: #333; margin-bottom: 20px;">Hello ${req.body.firstname},</h1>
+          <p style="font-size: 16px; line-height: 1.5;">
+            Thank you for scheduling your appointment with us! We're looking forward to seeing you soon.
+          </p>
+          <p style="font-size: 16px; margin-bottom: 20px;">
+            Here are the details of your appointment:
+          </p>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Name:</th>
+              <td style="padding: 10px; border: 1px solid #ddd;">${req.body.firstname} ${req.body.lastname}</td>
+            </tr>
+            <tr>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Email:</th>
+              <td style="padding: 10px; border: 1px solid #ddd;">${req.body.email}</td>
+            </tr>
+            <tr>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Phone Number:</th>
+              <td style="padding: 10px; border: 1px solid #ddd;">${req.body.number}</td>
+            </tr>
+            <tr>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Message:</th>
+              <td style="padding: 10px; border: 1px solid #ddd;">${req.body.message}</td>
+            </tr>
+          </table>
+          <p style="font-size: 16px; margin-top: 20px;">
+            Please feel free to contact us if you have any questions or need to make any changes to your appointment.
+          </p>
+          <p style="font-size: 16px;">
+            Sincerely,<br>
+            The Appointment Team
+          </p>
+        </div>
       `,
-      };
+    };
 
-      // Send the email
-      await transporter.sendMail(mailOptions);
+    // Send the email
+    await transporter.sendMail(mailOptions);
 
-      console.log("Welcome email sent successfully");
-    } else {
-      console.error(`Invalid email format for user: ${user._id}`);
-    }
+    console.log("Welcome email sent successfully");
+  } else {
+    console.error(`Invalid email format for user: ${user._id}`);
+  }
 
+  console.log(req.body);
+});
 
- console.log(req.body)
-})
 
 app.get('/privacy',(req,res)=>{
    res.render('view/privacy.ejs')
