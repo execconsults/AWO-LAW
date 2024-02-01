@@ -10,7 +10,7 @@ const ExpressError = require("./views/utilities/ExpressError");
 const tailwind = require("tailwindcss");
 const axios = require("axios");
 const fs = require("fs");
-const Contacts = require("./model/appoiment");
+const Contacts = require("./model/sendmsg");
 // Replace with your Namecheap API credentials
 const apiKey = "cb839aa178c341898fd81c36924005a9";
 const userName = "zlivehe55";
@@ -234,6 +234,40 @@ app.get('/quotes',(req,res) =>{
    res.render('view/quotes.ejs')
 })
 
+app.post('/contact',async(req,res) =>{
+  console.log(req.body)
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'awolaw@gmail.com',
+      pass: 'ogrf qiks kcoi hjtx',
+    },
+  });
+
+  // Check if the email is in a valid format
+  if (validateEmailFormat(userEmail)) {
+    const mailOptions = {
+      from: 'awolaw@gmail.com',
+      to: userEmail,
+      subject: 'Thanks for your appoiments ',
+      html: `
+        <p>Hello ${req.body.name},</p>
+      
+      `,
+      };
+
+      // Send the email
+      await transporter.sendMail(mailOptions);
+
+      console.log("Welcome email sent successfully");
+    } else {
+      console.error(`Invalid email format for user: ${user._id}`);
+    }
+
+
+ console.log(req.body)
+})
+
 app.get('/privacy',(req,res)=>{
    res.render('view/privacy.ejs')
 })
@@ -241,7 +275,7 @@ app.get('/cookies',(req,res)=>{
    res.render('view/cookies.ejs')
 })
 app.get('/terms',(req,res)=>{
-
+    const Contactform = new Contacts()
    res.render('view/terms.ejs')
 })
 app.get('/help',(req,res)=>{
