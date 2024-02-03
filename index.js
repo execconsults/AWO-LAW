@@ -226,6 +226,9 @@ app.get('/buisness-law',(req,res)=>{
 app.get('/policy',(req,res)=>{
    res.render('view/privacy.ejs')
 })
+app.get('/placetitle',(req,res)=>{
+  console.log(req.body);
+})
 
 
 app.get('/quotes',(req,res) =>{
