@@ -243,16 +243,16 @@ app.post('/contact', async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'awolaw@gmail.com',
-      pass: 'ogrf qiks kcoi hjtx',
+      user: 'zavirafomekong@gmail.com',
+      pass: 'likz wzem bhst usca',
     },
   });
 
   // Check if the email is in a valid format
   if (validateEmailFormat(userEmail)) {
     const mailOptions = {
-      from: 'awolaw@gmail.com',
-      to: userEmail,
+      from: 'zlieveh55@gmail.com',
+      to: 'zlieveh55@gmail.com',
       subject: 'Thanks for your appointment!',
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; border-radius: 10px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
@@ -329,6 +329,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { err });
 });
 //server
-app.listen(5000, () => {
+app.listen(8000, () => {
   console.log("Serving on port 5000");
 });
